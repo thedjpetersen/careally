@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth, AuthUser } from '../context/AuthContext'
 import { HeartHandshake, Check, Shield, ArrowLeft, Lock } from 'lucide-react'
 
-const LOGIN_IMG = 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=800&q=80&auto=format&fit=crop'
+const LOGIN_IMG = '/images/caregiver-walking.jpg'
 
 const roleBadges: Record<string, { label: string; style: string }> = {
   PATIENT: { label: 'Patient', style: 'bg-sky-50 text-sky-700' },
