@@ -359,7 +359,7 @@ export default function Landing() {
       </section>
 
       {/* Who it's for */}
-      <section className="bg-white border-y border-warm-100 py-20 md:py-28">
+      <section id="roles" className="bg-white border-y border-warm-100 py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <p className="text-[11px] text-brand-600 uppercase tracking-[0.2em] font-semibold mb-3">Built for every role</p>
@@ -442,41 +442,82 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-warm-200 bg-white py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-start justify-between gap-8">
-            <div>
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-brand-700 flex items-center justify-center text-white">
-                  <HeartHandshake className="w-4 h-4" />
+      <footer className="border-t border-warm-200 bg-brand-800">
+        {/* Main footer content */}
+        <div className="max-w-6xl mx-auto px-6 py-14">
+          <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-6">
+            {/* Brand column */}
+            <div className="col-span-2 md:col-span-4">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                  <HeartHandshake className="w-5 h-5" />
                 </div>
-                <span className="text-lg text-brand-800" style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}>CareAlly</span>
+                <span className="text-xl text-white" style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}>CareAlly</span>
               </div>
-              <p className="text-sm text-warm-400 max-w-xs leading-relaxed">
-                Coordinating care for families, caregivers, and clinicians. Built with care for caregivers.
+              <p className="text-sm text-brand-300 leading-relaxed max-w-xs mb-6">
+                Coordinating care for families, caregivers, and clinicians. Because better handoffs mean better care.
               </p>
+              <div className="flex items-center gap-2 text-brand-400">
+                <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                <span className="text-xs font-medium">All systems operational</span>
+              </div>
             </div>
-            <div className="flex gap-12">
-              <div>
-                <p className="text-[10px] text-warm-400 uppercase tracking-[0.15em] font-semibold mb-3">Product</p>
-                <ul className="space-y-2 text-sm text-warm-500">
-                  <li><a href="#features" className="hover:text-brand-600 transition-colors">Features</a></li>
-                  <li><a href="#how-it-works" className="hover:text-brand-600 transition-colors">How It Works</a></li>
-                  <li><a href="#testimonials" className="hover:text-brand-600 transition-colors">Testimonials</a></li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-[10px] text-warm-400 uppercase tracking-[0.15em] font-semibold mb-3">Get Started</p>
-                <ul className="space-y-2 text-sm text-warm-500">
-                  <li><Link to="/login" className="hover:text-brand-600 transition-colors">Sign In</Link></li>
-                  <li><Link to="/login" className="hover:text-brand-600 transition-colors">Try Demo</Link></li>
-                </ul>
-              </div>
+
+            {/* Product column */}
+            <div className="col-span-1 md:col-span-2">
+              <p className="text-[10px] text-brand-400 uppercase tracking-[0.15em] font-semibold mb-4">Product</p>
+              <ul className="space-y-2.5 text-sm">
+                <li><a href="#features" className="text-brand-300 hover:text-white transition-colors">Features</a></li>
+                <li><a href="#how-it-works" className="text-brand-300 hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#testimonials" className="text-brand-300 hover:text-white transition-colors">Testimonials</a></li>
+                <li><a href="#roles" className="text-brand-300 hover:text-white transition-colors">Who It's For</a></li>
+              </ul>
+            </div>
+
+            {/* Features column */}
+            <div className="col-span-1 md:col-span-2">
+              <p className="text-[10px] text-brand-400 uppercase tracking-[0.15em] font-semibold mb-4">Features</p>
+              <ul className="space-y-2.5 text-sm">
+                <li><a href="#features" className="text-brand-300 hover:text-white transition-colors">Handoff Logs</a></li>
+                <li><a href="#features" className="text-brand-300 hover:text-white transition-colors">Symptom Tracking</a></li>
+                <li><a href="#features" className="text-brand-300 hover:text-white transition-colors">Care Checklists</a></li>
+                <li><a href="#features" className="text-brand-300 hover:text-white transition-colors">Smart Alerts</a></li>
+              </ul>
+            </div>
+
+            {/* Get Started column */}
+            <div className="col-span-1 md:col-span-2">
+              <p className="text-[10px] text-brand-400 uppercase tracking-[0.15em] font-semibold mb-4">Get Started</p>
+              <ul className="space-y-2.5 text-sm">
+                <li><Link to="/login" className="text-brand-300 hover:text-white transition-colors">Sign In</Link></li>
+                <li><Link to="/login" className="text-brand-300 hover:text-white transition-colors">Try the Demo</Link></li>
+                <li><a href="#how-it-works" className="text-brand-300 hover:text-white transition-colors">Quick Start Guide</a></li>
+              </ul>
+            </div>
+
+            {/* Legal / Info column */}
+            <div className="col-span-1 md:col-span-2">
+              <p className="text-[10px] text-brand-400 uppercase tracking-[0.15em] font-semibold mb-4">Legal</p>
+              <ul className="space-y-2.5 text-sm">
+                <li><a href="#" className="text-brand-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="text-brand-300 hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="text-brand-300 hover:text-white transition-colors">HIPAA Notice</a></li>
+                <li><a href="#" className="text-brand-300 hover:text-white transition-colors">Accessibility</a></li>
+              </ul>
             </div>
           </div>
-          <div className="border-t border-warm-100 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-2">
-            <p className="text-xs text-warm-400">This is a demo application. Images from Unsplash.</p>
-            <p className="text-xs text-warm-400">&copy; 2026 CareAlly</p>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-brand-700">
+          <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-brand-400">&copy; 2026 CareAlly. All rights reserved. This is a demo application.</p>
+            <div className="flex items-center gap-6 text-xs text-brand-400">
+              <a href="#" className="hover:text-brand-200 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-brand-200 transition-colors">Terms</a>
+              <a href="#" className="hover:text-brand-200 transition-colors">Cookies</a>
+              <span>Photos by <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" className="text-brand-300 hover:text-white transition-colors">Unsplash</a></span>
+            </div>
           </div>
         </div>
       </footer>
