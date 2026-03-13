@@ -1,0 +1,12 @@
+name = "careally"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "dist"
+
+[vars]
+JWT_SECRET = "careally-demo-secret-change-in-prod"
+DEMO_PIN = "1234"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "careally-db"
+database_id = "111a3cdc-626f-455b-99c8-a2746a9b6fe0"
