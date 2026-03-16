@@ -85,13 +85,13 @@ export default function Dashboard() {
           </div>
           <div className="space-y-2.5">
             {activeAlerts.map((alert) => (
-              <div key={alert.id} className="bg-white border border-warm-200 rounded-xl p-4 flex items-start gap-3">
+              <Link key={alert.id} to={`/alerts/${alert.id}`} className="block bg-white border border-warm-200 rounded-xl p-4 flex items-start gap-3 hover:border-brand-300 hover:shadow-sm transition-all">
                 <FlagBadge severity={alert.severity} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-warm-900">{alert.message}</p>
                   <p className="text-xs text-warm-400 mt-1">{formatTime(alert.created_at)}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function Dashboard() {
         </div>
         <div className="space-y-2.5">
           {recentLogs.map((entry) => (
-            <div key={entry.id} className="bg-white border border-warm-200 rounded-xl p-4">
+            <Link key={entry.id} to={`/log/${entry.id}`} className="block bg-white border border-warm-200 rounded-xl p-4 hover:border-brand-300 hover:shadow-sm transition-all">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -121,7 +121,7 @@ export default function Dashboard() {
                   <p className="text-xs text-warm-400 mt-1">{entry.author_name} &middot; {formatTime(entry.timestamp)}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

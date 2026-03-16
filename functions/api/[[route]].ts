@@ -190,6 +190,54 @@ authed.patch('/care-teams/:teamId/checklist/:itemId', async (c) => {
   return c.json({ ok: true })
 })
 
+// ===================== Single Log Entry =====================
+
+authed.get('/care-teams/:teamId/log/:entryId', async (c) => {
+  const teamId = c.req.param('teamId')
+  const entryId = c.req.param('entryId')
+  const user = c.get('user')
+
+  const entry = await c.env.DB.prepare(
+    'SELECT h.*, u.name as author_name, u.role as author_role, u.avatar as author_avatar FROM handoff_log_entries h JOIN users u ON h.author_id = u.id WHERE h.id = ? AND h.care_team_id = ?'
+  ).bind(entryId, teamId).first()
+
+  if (!entry) return c.json({ error: 'Not found' }, 404)
+  if (user.role === 'SECONDARY_CAREGIVER' && (entry as any).entry_type === 'CLINICAL_NOTE') {
+    return c.json({ error: 'Forbidden' }, 403)
+  }
+
+  return c.json({
+    ...entry,
+    details: (entry as any).details ? JSON.parse((entry as any).details) : null,
+    is_flagged: Boolean((entry as any).is_flagged),
+  })
+})
+
+// ===================== Single User with Recent Entries =====================
+
+authed.get('/care-teams/:teamId/users/:userId', async (c) => {
+  const teamId = c.req.param('teamId')
+  const userId = c.req.param('userId')
+
+  const member = await c.env.DB.prepare(
+    'SELECT id, care_team_id, role, name, avatar FROM users WHERE id = ? AND care_team_id = ?'
+  ).bind(userId, teamId).first()
+
+  if (!member) return c.json({ error: 'Not found' }, 404)
+
+  const { results } = await c.env.DB.prepare(
+    'SELECT h.*, u.name as author_name, u.role as author_role, u.avatar as author_avatar FROM handoff_log_entries h JOIN users u ON h.author_id = u.id WHERE h.author_id = ? AND h.care_team_id = ? ORDER BY h.timestamp DESC LIMIT 20'
+  ).bind(userId, teamId).all()
+
+  const entries = results.map((r: any) => ({
+    ...r,
+    details: r.details ? JSON.parse(r.details) : null,
+    is_flagged: Boolean(r.is_flagged),
+  }))
+
+  return c.json({ ...member, recent_entries: entries })
+})
+
 // ===================== Alerts =====================
 
 authed.get('/care-teams/:teamId/alerts', async (c) => {
@@ -203,6 +251,33 @@ authed.get('/care-teams/:teamId/alerts', async (c) => {
     'SELECT a.* FROM actionable_alerts a JOIN handoff_log_entries h ON a.log_entry_id = h.id WHERE h.care_team_id = ? ORDER BY a.created_at DESC'
   ).bind(teamId).all()
   return c.json(results)
+})
+
+authed.get('/care-teams/:teamId/alerts/:alertId', async (c) => {
+  const user = c.get('user')
+  if (user.role !== 'CLINICIAN' && user.role !== 'PRIMARY_CAREGIVER') {
+    return c.json({ error: 'Forbidden' }, 403)
+  }
+  const teamId = c.req.param('teamId')
+  const alertId = c.req.param('alertId')
+
+  const alert = await c.env.DB.prepare(
+    'SELECT a.* FROM actionable_alerts a JOIN handoff_log_entries h ON a.log_entry_id = h.id WHERE a.id = ? AND h.care_team_id = ?'
+  ).bind(alertId, teamId).first()
+
+  if (!alert) return c.json({ error: 'Not found' }, 404)
+
+  const logEntry = await c.env.DB.prepare(
+    'SELECT h.*, u.name as author_name, u.role as author_role, u.avatar as author_avatar FROM handoff_log_entries h JOIN users u ON h.author_id = u.id WHERE h.id = ?'
+  ).bind((alert as any).log_entry_id).first()
+
+  const parsedEntry = logEntry ? {
+    ...logEntry,
+    details: (logEntry as any).details ? JSON.parse((logEntry as any).details) : null,
+    is_flagged: Boolean((logEntry as any).is_flagged),
+  } : null
+
+  return c.json({ ...alert, log_entry: parsedEntry })
 })
 
 authed.patch('/alerts/:alertId', async (c) => {

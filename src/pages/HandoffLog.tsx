@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Activity, Thermometer, Pill, FileText, ListChecks } from 'lucide-react'
 import { fetchLog, LogEntry } from '../data/api'
 import FlagBadge from '../components/FlagBadge'
@@ -69,7 +70,7 @@ export default function HandoffLog() {
               return (
                 <div key={entry.id} className="relative pl-10">
                   <div className="absolute left-2 top-5 w-3 h-3 rounded-full border-2 border-warm-50 bg-brand-500 ring-4 ring-warm-50" />
-                  <div className="bg-white border border-warm-200 rounded-xl p-5">
+                  <Link to={`/log/${entry.id}`} className="block bg-white border border-warm-200 rounded-xl p-5 hover:border-brand-300 hover:shadow-sm transition-all">
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${tc?.style}`}>
@@ -101,7 +102,7 @@ export default function HandoffLog() {
                         {entry.author_name} &middot; {roleLabels[entry.author_role] || entry.author_role}
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               )
             })}

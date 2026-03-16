@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { UserPlus, User, Heart, Users as UsersIcon, Stethoscope } from 'lucide-react'
 import { fetchUsers, User as UserType } from '../data/api'
 import Spinner from '../components/Spinner'
@@ -41,7 +42,7 @@ export default function Team() {
           const badge = roleBadges[member.role]
           const RoleIcon = badge?.icon
           return (
-            <div key={member.id} className="bg-white border border-warm-200 rounded-xl p-4 hover:shadow-sm transition-shadow">
+            <Link key={member.id} to={`/team/${member.id}`} className="block bg-white border border-warm-200 rounded-xl p-4 hover:border-brand-300 hover:shadow-sm transition-all">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-sm font-bold flex-shrink-0">
                   {member.avatar}
@@ -57,7 +58,7 @@ export default function Team() {
                   <p className="text-xs text-warm-400 mt-1.5 leading-relaxed">{roleDescriptions[member.role]}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>

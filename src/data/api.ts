@@ -97,3 +97,26 @@ export async function updateAlertStatus(alertId: string, status: string): Promis
     body: JSON.stringify({ status }),
   })
 }
+
+export async function fetchLogEntry(entryId: string): Promise<LogEntry> {
+  const res = await fetch(`${BASE}/care-teams/${TEAM_ID}/log/${entryId}`)
+  return res.json()
+}
+
+export interface AlertWithEntry extends Alert {
+  log_entry: LogEntry | null
+}
+
+export async function fetchAlert(alertId: string): Promise<AlertWithEntry> {
+  const res = await fetch(`${BASE}/care-teams/${TEAM_ID}/alerts/${alertId}`)
+  return res.json()
+}
+
+export interface UserWithEntries extends User {
+  recent_entries: LogEntry[]
+}
+
+export async function fetchUser(userId: string): Promise<UserWithEntries> {
+  const res = await fetch(`${BASE}/care-teams/${TEAM_ID}/users/${userId}`)
+  return res.json()
+}

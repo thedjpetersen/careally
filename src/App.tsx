@@ -6,6 +6,9 @@ import HandoffLog from './pages/HandoffLog'
 import Checklist from './pages/Checklist'
 import Symptoms from './pages/Symptoms'
 import Team from './pages/Team'
+import LogEntryDetail from './pages/LogEntryDetail'
+import AlertDetail from './pages/AlertDetail'
+import TeamMemberDetail from './pages/TeamMemberDetail'
 import Login from './pages/Login'
 import Landing from './pages/Landing'
 import { AuthProvider, useAuth } from './context/AuthContext'
@@ -41,6 +44,9 @@ function AppRoutes() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/log" element={<HandoffLog />} />
+            <Route path="/log/:id" element={<LogEntryDetail />} />
+            <Route path="/alerts/:id" element={<AlertDetail />} />
+            <Route path="/team/:id" element={<TeamMemberDetail />} />
             <Route path="/checklist" element={<Checklist />} />
             <Route path="/symptoms" element={<Symptoms />} />
             <Route path="/team" element={<Team />} />
